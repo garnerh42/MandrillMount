@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: MandrillMount
+## Version: 30.735
+## Author: BankNorris
+## Notes: Mount addon.
+## Notes-ptBR: Addon de montaria.
+## Notes-esMX: Addon de montura.
+## SavedVariablesPerCharacter: MandrillMountData
+Libs\SetMacroIcon.lua
+MandrillMount.lua
