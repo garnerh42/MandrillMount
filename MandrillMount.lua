@@ -282,6 +282,7 @@ function define_shaman_macro_text()
 end
 	
 function define_druid_macro_text()
+  -- DEFAULT_CHAT_FRAME:AddMessage( "define_druid_macro_text" )
 	local macro_text
 	local form = GetShapeshiftForm()
 	if CanExitVehicle() then
@@ -313,15 +314,11 @@ function define_druid_macro_text()
 	elseif form==druid_form[FlightForm] then
 		macro_text = "/cast "..FlightForm
 	elseif flags.is_moving and flags.is_outdoors then
-		if flags.FlightFormOk then
-			macro_text = "/cast "..FlightForm
-		else
-			macro_text = "/cast "..TravelForm
-		end
-	elseif flags.is_moving then
-		macro_text = "/cast "..CatForm
+		macro_text = "/cast "..TravelForm
 	elseif flags.just_submerged and flags.FlyingOk then
 		macro_text = "/cast "..FMN
+	elseif flags.is_submerged and flags.is_outdoors then
+		macro_text = "/cast "..TravelForm
 	elseif flags.is_submerged and flags.is_outdoor_vashjir and flags.AbyssalOk then
 		macro_text = "/cast "..AbyssalSeaHorse
 	elseif flags.is_submerged and flags.RidingTurtleOk and flags.SeaTurtleOk then
@@ -336,8 +333,8 @@ function define_druid_macro_text()
 		macro_text = "/cast "..SeaTurtle
 	elseif flags.is_submerged and flags.SeaHorseOk then
 		macro_text = "/cast "..SubduedSeaHorse
-	elseif flags.is_submerged and flags.is_outdoors then
-		macro_text = "/cast "..TravelForm
+	elseif flags.is_moving then
+		macro_text = "/cast "..CatForm
 	elseif flags.FlyingOk and FMN=="RANDOM" then
 		macro_text = SummonRandomMountMacro
 	elseif flags.FlyingOk then
@@ -351,6 +348,7 @@ function define_druid_macro_text()
 	else
 		macro_text = "/cast "..CatForm
 	end
+  -- DEFAULT_CHAT_FRAME:AddMessage( macro_text )
 	return macro_text
 end
 
