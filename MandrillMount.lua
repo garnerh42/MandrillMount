@@ -90,6 +90,7 @@ local TelaariTalbuk = 165803
 local TravelForm = GetSpellInfo(783)
 local WaterWalking = GetSpellInfo(546)
 local ZenFlight = GetSpellInfo(125883)
+local MapIdTimelessIsle = 554
 
 --constants defined with other constants
 local GarrisonMacro = "/cast "..GarrisonAbility
@@ -532,6 +533,7 @@ MandrillMount:SetScript("OnEvent",function(self,event,...)
 	elseif IsGarrison[zone] then
 		zone = Draenor
 	end
+
 	if zone==Draenor then
 		_,_,corral_mount_icon,_,_,_,GarrisonOverrideSpell = GetSpellInfo(GarrisonAbility)
 		flags.GarrisonMountOk = (GarrisonOverrideSpell==FrostwolfWarWolf or GarrisonOverrideSpell==TelaariTalbuk) and flags.is_outdoors
@@ -600,6 +602,11 @@ MandrillMount:SetScript("OnEvent",function(self,event,...)
 		end
 	end
 	flags.FlyingOk = not flags.in_combat and (FMN=="RANDOM" and flags.is_outdoors or IsUsableSpell(FMN)) and (zone==Pandaria or zone==Draenor or zone==BrokenIsles or IsFlyableArea()) and CanFly()
+
+  if WorldMapFrame.mapID == MapIdTimelessIsle then
+    flags.FlyingOk = false
+  end
+
 	if class=="DRUID" then
 		flags.FlightFormOk = flags.FlyingOk and IsUsableSpell(FlightForm)
 	elseif class=="MONK" then
