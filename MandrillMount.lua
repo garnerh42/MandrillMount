@@ -179,6 +179,9 @@ SlashCmdList["MANDRILLMOUNT"] = function(msg)
 	flags.is_moving = GetUnitSpeed("player")~=0 or IsFalling()
 	flags.just_submerged = IsSubmerged() and GetTime()-timer<1
 	if not flags.in_combat then
+    if WorldMapFrame.mapID == MapIdTimelessIsle then
+      flags.FlyingOk = false
+    end
 		local macro_text
 		if class=="SHAMAN" then
 			macro_text = define_shaman_macro_text()
@@ -430,6 +433,7 @@ function define_monk_macro_text()
 end
 
 function define_non_shaman_non_druid_non_monk_macro_text()
+  -- DEFAULT_CHAT_FRAME:AddMessage( "define_non_shaman_non_druid_non_monk_macro_text" )
 	local macro_text
 	if CanExitVehicle() then
 		macro_text = "/run VehicleExit()"
@@ -494,8 +498,10 @@ function define_non_shaman_non_druid_non_monk_macro_text()
 			macro_text = "/cast "..GMN
 		end
 	else
+    -- DEFAULT_CHAT_FRAME:AddMessage( "empty" )
 		macro_text = ""
 	end
+  -- DEFAULT_CHAT_FRAME:AddMessage( macro_text )
 	return macro_text
 end
 
@@ -602,10 +608,6 @@ MandrillMount:SetScript("OnEvent",function(self,event,...)
 		end
 	end
 	flags.FlyingOk = not flags.in_combat and (FMN=="RANDOM" and flags.is_outdoors or IsUsableSpell(FMN)) and (zone==Pandaria or zone==Draenor or zone==BrokenIsles or IsFlyableArea()) and CanFly()
-
-  if WorldMapFrame.mapID == MapIdTimelessIsle then
-    flags.FlyingOk = false
-  end
 
 	if class=="DRUID" then
 		flags.FlightFormOk = flags.FlyingOk and IsUsableSpell(FlightForm)
