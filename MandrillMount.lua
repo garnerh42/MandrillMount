@@ -178,8 +178,10 @@ SlashCmdList["MANDRILLMOUNT"] = function(msg)
 	MandrillMountData["AltMountName"] = AMN
 	flags.is_moving = GetUnitSpeed("player")~=0 or IsFalling()
 	flags.just_submerged = IsSubmerged() and GetTime()-timer<1
+  bestMapID = C_Map.GetBestMapForUnit("player")
+  -- DEFAULT_CHAT_FRAME:AddMessage( "mapId: " .. bestMapID )
 	if not flags.in_combat then
-    if WorldMapFrame.mapID == MapIdTimelessIsle then
+    if WorldMapFrame.mapID == MapIdTimelessIsle or bestMapID == MapIdTimelessIsle then
       flags.FlyingOk = false
     end
 		local macro_text
