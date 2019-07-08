@@ -223,9 +223,14 @@ function CanFly()
 		can_fly = true
 	elseif zone==BrokenIsles and flags.BrokenIslesPathfinder2 then
 		can_fly = true
+	elseif (zone==1642 or zone==1643 or zone==1718) and flags.BfaPathfinder2 then
+		can_fly = true
 	elseif zone==1756 then
 		can_fly = true
 	end
+  if can_fly == false then
+    DEFAULT_CHAT_FRAME:AddMessage( "can't fly, zone = "..zone )
+  end
 	return can_fly
 end
 
@@ -552,6 +557,7 @@ MandrillMount:SetScript("OnEvent",function(self,event,...)
 	if zone==BrokenIsles then
 		flags.BrokenIslesPathfinder2 = IsSpellKnown(233368)
 	end
+  flags.BfaPathfinder2 = IsSpellKnown(278833)
 	local MacroName = MandrillMountData["MacroName"]
 	if event=="PLAYER_ENTERING_WORLD" then
 		GMN = MandrillMountData["GroundMountName"]
@@ -579,7 +585,7 @@ MandrillMount:SetScript("OnEvent",function(self,event,...)
 				flags.ExpertRiding = IsSpellKnown(34090)
 			end
 		end
-		if not (flags.MasterRiding and flags.DraenorPathfinder and flags.BrokenIslesPathfinder2) then
+		if not (flags.MasterRiding and flags.DraenorPathfinder and flags.BrokenIslesPathfinder2 and flags.BfaPathfinder2) then
 			self:RegisterEvent("LEARNED_SPELL_IN_TAB")
 		end
 		if MacroName then
@@ -604,8 +610,10 @@ MandrillMount:SetScript("OnEvent",function(self,event,...)
 			flags.DraenorPathfinder = true
 		elseif arg==233368 then
 			flags.BrokenIslesPathfinder2 = true
+		elseif arg==278833 then
+			flags.BfaPathfinder2 = true
 		end
-		if flags.MasterRiding and flags.DraenorPathfinder and flags.BrokenIslesPathfinder2 then
+		if flags.MasterRiding and flags.DraenorPathfinder and flags.BrokenIslesPathfinder2 and flags.BfaPathfinder2 then
 			self:UnregisterEvent("LEARNED_SPELL_IN_TAB")
 		end
 	end
